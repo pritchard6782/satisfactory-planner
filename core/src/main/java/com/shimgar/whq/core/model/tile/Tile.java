@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.Data;
+
+@Data
 @Entity
 public class Tile {
 	@Id
@@ -13,36 +16,4 @@ public class Tile {
 	private String imageUrl;
 	private boolean[][] floor;
 	private boolean[][] walls;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-
-	public boolean[][] getFloor() {
-		return floor;
-	}
-
-	public void setFloor(boolean[][] floor) {
-		this.floor = floor;
-	}
-
-	public boolean[][] getWalls() {
-		return walls;
-	}
-
-	public void setWalls(boolean[][] walls) {
-		this.walls = walls;
-	}
 }

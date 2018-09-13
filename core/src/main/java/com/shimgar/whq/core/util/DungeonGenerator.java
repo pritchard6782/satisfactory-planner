@@ -15,13 +15,14 @@ import com.shimgar.whq.core.model.tile.dao.TileDao;
 public class DungeonGenerator {
 	
 	@Autowired
-	private TileDao TileDao;
+	private TileDao tileDao;
 	
 	/**
 	 * Generate a new dungeon
 	 */
 	public Dungeon generateNewDungeon() {
-		Dungeon dungeon = new Dungeon(createNewTileDeck());
+		Dungeon dungeon = new Dungeon();
+		dungeon.setDungeonTileList(createNewTileDeck());
 		arrangeFloorTiles(dungeon);
 		return dungeon;
 	}
@@ -31,7 +32,11 @@ public class DungeonGenerator {
 	 */
 	private List<DungeonTile> createNewTileDeck() {
 		List<DungeonTile> tileList = new ArrayList<>();
-		TileDao.findAll().forEach(tile -> tileList.add(new DungeonTile(tile)));
+		tileDao.findAll().forEach(tile -> {
+			DungeonTile dungeonTile = new DungeonTile();
+			dungeonTile.setTile(tile);
+			tileList.add(dungeonTile);
+		});
 		Collections.shuffle(tileList);
 		return tileList;
 	}
