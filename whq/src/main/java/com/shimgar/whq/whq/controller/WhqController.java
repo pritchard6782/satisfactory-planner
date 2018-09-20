@@ -22,6 +22,14 @@ public class WhqController {
 	@Autowired
 	private RoomDao roomDao;
 
+    @MessageMapping("/newRoom")
+	@SendTo("/topic/public")
+    public Optional<Room> newRoom() {
+    	
+		log.debug("in sendmessage ");
+		return roomDao.findById(1);
+	}
+
     @MessageMapping("/getRoom")
 	@SendTo("/topic/public")
     public Optional<Room> getRoom(@Payload Integer roomId) {

@@ -1,23 +1,20 @@
-package com.shimgar.whq.core.model.tile;
-
-import java.util.Set;
+package com.shimgar.whq.core.model.player;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 import lombok.Data;
 
 @Data
 @Entity
-public class Tile {
+public class PlayerHero {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	private String imageUrl;
-	private int numberOfExits;
-	@OneToMany
-	private Set<RotatedTile> rotatedTiles;
+	private String name;
+	@ManyToOne
+	private Hero hero;
 }
