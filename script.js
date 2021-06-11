@@ -1,7 +1,14 @@
 const minZoom = 3
 const maxZoom = 7
 const tileSize = 256
-const dataUrl = '/data.json'
+
+const svgIconMarker = `
+    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <g>
+            <circle cx="47" cy="77" r="24" fill="{insideColor}" stroke="{outsideColor}" stroke-width="2" />
+            <image x="29" y="59" width="36" height="36" xlink:href="{iconImage}" />
+        </g>
+    </svg>`
 
 const mapOptions = {
     crs                             : L.CRS.Simple,
@@ -57,32 +64,28 @@ L.tileLayer('https://static.satisfactory-calculator.com/imgMap/gameLayer/Experim
 
 const mapControls = {}
 
-$.getJSON(dataUrl, function(data){
-    console.log(data)
+console.log(window.mapData)
 
-    for (const tab of data.options) {
+for (const tab of window.mapData.options) {
+    for (const resourceGroup of tab.options) {
+        for (const resource of resourceGroup.options) {
+            
+            if(resource.purity !== undefined)
+            {
+                const layerGroup = L.layerGroup().addTo(map)
+                mapControls[resource.layerId] = layerGroup
 
-        for (const resourceGroup of tab.options) {
+                for (const marker of resource.markers) {
 
-            for (const resource of resourceGroup.options) {
-                
-                if(resource.purity !== undefined)
-                {
-                    const layerGroup = L.layerGroup().addTo(map)
-                    mapControls[resource.layerId] = layerGroup
-
-                    for (const marker of resource.markers) {
-
-                        const icon = getMarkerIcon(resource.outsideColor, resource.insideColor, resource.icon)
-                        L.marker(unproject([marker.x, marker.y]), { icon }).bindTooltip("my tooltip text").addTo(layerGroup);
-                    }
+                    const icon = getMarkerIcon(resource.outsideColor, resource.insideColor, resource.icon)
+                    L.marker(unproject([marker.x, marker.y]), { icon }).addTo(layerGroup);
                 }
             }
         }
     }
+}
 
-    L.control.layers(mapControls).addTo(map);
-})
+L.control.layers(mapControls).addTo(map);
 
 ////////////
 
@@ -111,6 +114,7 @@ function trainLineMapClick(e) {
 
 const createFactoryButton = $('#create-factory-button')
 const factoryLayerGroup = L.layerGroup().addTo(map)
+const factories = []
 let createFactoryEnabled = true
 
 createFactoryButton.click(() => {
@@ -119,8 +123,12 @@ createFactoryButton.click(() => {
 
 function createFactoryMapClick(e) {
     if (createFactoryEnabled) {
+        const factory = {
+            name: "New Factory"
+        }
+        factories.push(factory)
         const icon = getMarkerIcon("purple", "cyan", "https://static.satisfactory-calculator.com/img/gameUpdate4/ConstructorMk1_256.png?v=1615800933")
-        L.marker(e.latlng, { icon }).addTo(factoryLayerGroup)
+        L.marker(e.latlng, { icon }).addTo(factoryLayerGroup).on('click', (e) => console.log(factory))
         createFactoryEnabled = false
     }
 }
@@ -135,14 +143,6 @@ function onMapClick(e) {
 map.on('click', onMapClick);
 
 ////////////
-
-const svgIconMarker = `
-    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <g>
-            <circle cx="47" cy="77" r="24" fill="{insideColor}" stroke="{outsideColor}" stroke-width="2" />
-            <image x="29" y="59" width="36" height="36" xlink:href="{iconImage}" />
-        </g>
-    </svg>`
 
 function getMarkerIcon(outsideColor, insideColor, iconImage) {
 

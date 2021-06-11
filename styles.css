@@ -6,6 +6,12 @@
     font-size: 20px; 
 }
 
-.jquery-modal {
-    z-index: 99999;
+.minimap {
+    border: 1px solid blue;
+  position: absolute !important;
+  top: 20px;
+  left: 20px;
+}
+.design {
+  border: 1px solid black;
 }

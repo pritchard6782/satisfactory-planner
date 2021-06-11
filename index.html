@@ -9,25 +9,31 @@
         <link rel="stylesheet" href="styles.css" />
 
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-        <script  src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.4.0/fabric.min.js"></script>
 
     </head>
     <body>
+
+        <canvas id="design" width="1600" height="800"></canvas>
+        
         <div>
             <button id="create-train-line-button" class="btn">Train Track</button>
             <button id="create-factory-button" class="btn">Add Factory</button>
             <a href="#ex1" rel="modal:open" class="btn">Modal</a>
         </div>
-        
+
         <div id="mapid"></div>
 
         <div id="ex1" class="modal">
+            
             <p>Thanks for clicking. That felt good.</p>
             <a href="#" rel="modal:close">Close</a>
           </div>
 
-          <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+          <script src="data.js"></script>
+          <script src="factory.js"></script>
           <script src="script.js"></script>
     </body>
 </html>
