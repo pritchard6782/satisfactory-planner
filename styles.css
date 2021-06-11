@@ -1,0 +1,11 @@
+#mapid { 
+    height: 1200px; 
+}
+
+.btn { 
+    font-size: 20px; 
+}
+
+.jquery-modal {
+    z-index: 99999;
+}
