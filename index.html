@@ -15,12 +15,25 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
         <style>
+            .factoryRow {
+                background: #e4e4e4
+            }
+            .factoryHeader {
+                height: 50px;
+                background: darkblue;
+                color: white;
+            }
+            .factoryBody {
+                height: 1000px;
+            }
             .factoryBlockContainer {
                 width: 300px;
-                height: 200px;
-                background: green;
+                height: 220px;
+                padding: 1px;
+                background: rgb(25, 151, 25);
                 color: white;
-                position: absolute;
+                border-radius: 8px;
+                box-shadow: 5px 5px 8px 10px #888888;
             }
             .factoryBlockMachinesLabel {
                 margin-right: 10px;
@@ -42,20 +55,25 @@
     </head>
     <body>
 
-        <div id="factoryBlock" style="width:100%; height: 1000px; background: #e4e4e4">
-            <div class="factoryBlockContainer" data-factory-block-container="1">
-                <div class="factoryBlockRow">
-                    <select class="factoryBlockSelect" data-factory-block-recipe-select="1"></select>
-                </div>
-                <div class="factoryBlockRow">
-                    <label class="factoryBlockMachinesLabel">Machines</label>
-                    <input type="text" class="factoryBlockMachinesAmount" data-factory-block-amount />
-                </div>
-                <div class="factoryBlockRow factoryBlockItems" data-factory-block-items-inputs="1">
-                    <label>Input</label>
-                </div>
-                <div class="factoryBlockRow factoryBlockItems" data-factory-block-items-outputs="1">
-                    <label>Output</label>
+        <div id="factory" class="factoryRow">
+            <div id="factoryInputsOutputs" class="factoryHeader">
+                <button id="newFactoryBlockButton">New Block</button>
+            </div>
+            <div id="factoryBody" class="factoryBody">
+                <div class="factoryBlockContainer" data-factory-block-container="1">
+                    <div class="factoryBlockRow">
+                        <select class="factoryBlockSelect" data-factory-block-recipe-select="1"></select>
+                    </div>
+                    <div class="factoryBlockRow">
+                        <label class="factoryBlockMachinesLabel">Machines</label>
+                        <input type="text" class="factoryBlockMachinesAmount" data-factory-block-amount />
+                    </div>
+                    <div class="factoryBlockRow factoryBlockItems" data-factory-block-items-inputs="1">
+                        <label>Input</label>
+                    </div>
+                    <div class="factoryBlockRow factoryBlockItems" data-factory-block-items-outputs="1">
+                        <label>Output</label>
+                    </div>
                 </div>
             </div>
         </div>
