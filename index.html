@@ -5,32 +5,35 @@
         <title>Factory Planner</title>
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
         <link rel="stylesheet" href="styles.css" />
 
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
         <style>
             .factoryRow {
-                background: #e4e4e4
+                background: #e4e4e4;
+                height: 800px;
             }
-            .factoryHeader {
-                height: 50px;
-                background: darkblue;
+            .factoryLeftContainer {
+                height: 100%;
+                width: 300px;
+                float: left;
+                background: #18165C;
                 color: white;
             }
-            .factoryBody {
-                height: 1000px;
+            .factoryRightContainer {
+                height: 100%;
+                width: calc(100% - 300px);
+                float: left;
             }
             .factoryBlockContainer {
                 width: 300px;
                 height: 220px;
                 padding: 1px;
-                background: rgb(25, 151, 25);
+                background: #7D7AE1;
                 color: white;
                 border-radius: 8px;
                 box-shadow: 5px 5px 8px 10px #888888;
@@ -55,11 +58,25 @@
     </head>
     <body>
 
+        <div>
+            <button id="create-train-line-button" class="btn">Train Track</button>
+            <button id="create-factory-button" class="btn">Add Factory</button>
+            <a href="#ex1" rel="modal:open" class="btn">Modal</a>
+        </div>
+
+        <div id="mapid"></div>
+
         <div id="factory" class="factoryRow">
-            <div id="factoryInputsOutputs" class="factoryHeader">
-                <button id="newFactoryBlockButton">New Block</button>
+            <div id="factoryInputsOutputs" class="factoryLeftContainer">
+                <button id="newFactoryBlockButton" class="factoryIoNewButton">New Block</button>
+                <div class="factoryIoRow factoryBlockItems" data-factory-io-items-inputs="1">
+                    <label>Input</label>
+                </div>
+                <div class="factoryIoRow factoryBlockItems" data-factory-io-items-outputs="1">
+                    <label>Output</label>
+                </div>
             </div>
-            <div id="factoryBody" class="factoryBody">
+            <div id="factoryBody" class="factoryRightContainer">
                 <div class="factoryBlockContainer" data-factory-block-container="1">
                     <div class="factoryBlockRow">
                         <select class="factoryBlockSelect" data-factory-block-recipe-select="1"></select>
@@ -77,19 +94,6 @@
                 </div>
             </div>
         </div>
-        <div>
-            <button id="create-train-line-button" class="btn">Train Track</button>
-            <button id="create-factory-button" class="btn">Add Factory</button>
-            <a href="#ex1" rel="modal:open" class="btn">Modal</a>
-        </div>
-
-        <div id="mapid"></div>
-
-        <div id="ex1" class="modal">
-            
-            <p>Thanks for clicking. That felt good.</p>
-            <a href="#" rel="modal:close">Close</a>
-          </div>
 
           <script src="itemData.js"></script>
           <script src="mapData.js"></script>

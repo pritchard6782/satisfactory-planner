@@ -60,6 +60,19 @@ L.tileLayer('https://static.satisfactory-calculator.com/imgMap/gameLayer/Experim
     bounds
 }).addTo(map);
 
+const factoryData = [{
+    inputs: {},
+    outputs: {},
+    lat: -35.75, 
+    lng: 91.375,
+    blocks: [{
+        x: 300,
+        y: 100,
+        recipe: "Recipe_IngotSteel_C",
+        amount: 2
+    }]
+}]
+
 ///////////
 
 const mapControls = {}
@@ -114,8 +127,16 @@ function trainLineMapClick(e) {
 
 const createFactoryButton = $('#create-factory-button')
 const factoryLayerGroup = L.layerGroup().addTo(map)
+const constructorIcon = getMarkerIcon("purple", "cyan", "https://static.satisfactory-calculator.com/img/gameUpdate4/ConstructorMk1_256.png?v=1615800933")
+
+// add factories to map
+
+for (const factory of factoryData) {
+    L.marker([factory.lat, factory.lng], { icon: constructorIcon }).addTo(factoryLayerGroup).on('click', (e) => window.buildFactory(factory))
+}
+
 const factories = []
-let createFactoryEnabled = true
+let createFactoryEnabled = false
 
 createFactoryButton.click(() => {
     createFactoryEnabled = !createFactoryEnabled
@@ -127,8 +148,8 @@ function createFactoryMapClick(e) {
             name: "New Factory"
         }
         factories.push(factory)
-        const icon = getMarkerIcon("purple", "cyan", "https://static.satisfactory-calculator.com/img/gameUpdate4/ConstructorMk1_256.png?v=1615800933")
         L.marker(e.latlng, { icon }).addTo(factoryLayerGroup).on('click', (e) => console.log(factory))
+        console.log(e.latlng)
         createFactoryEnabled = false
     }
 }
