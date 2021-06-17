@@ -12,14 +12,18 @@ function init() {
     
     const factoryBlockTemplate = initFactoryBlock()
     
-    window.buildFactory = function(factoryData) {
-        for (const block of factoryData.blocks) {
-            generateFactoryBlock(block, factoryData, factoryBlockTemplate, factoryBodyDiv, factoryInputsOutputs)
+    window.buildFactory = function(allFactoriesData, factoryData) {
+        console.log(allFactoriesData, factoryData)
+        factoryBodyDiv.empty()
+        for (const factoryBlockData of factoryData.blocks) {
+            generateFactoryBlock(allFactoriesData, factoryData, factoryBlockData, factoryBlockTemplate, factoryBodyDiv, factoryInputsOutputs)
         }
     
         updateInputOutputs(factoryData)
     
-        newBlockButton.click(generateNewFactoryBlock(factoryData, factoryBlockTemplate, factoryBodyDiv, factoryInputsOutputs))
+        newBlockButton.off('click').click(generateNewFactoryBlock(allFactoriesData, factoryData, factoryBlockTemplate, factoryBodyDiv, factoryInputsOutputs))
+
+        window.switchToFactoryTab()
     }
 }
 
@@ -56,38 +60,38 @@ function updateInputOutputs(factoryData) {
 
 ///////////
 
-function generateNewFactoryBlock(factoryData, factoryBlockTemplate, factoryBodyDiv, factoryInputsOutputs) {
+function generateNewFactoryBlock(allFactoriesData, factoryData, factoryBlockTemplate, factoryBodyDiv, factoryInputsOutputs) {
     return function() {
-        const newBlock = {
+        const factoryBlockData = {
             x: 100,
             y: 100,
             recipe: "Recipe_AILimiter_C",
             amount: 0
         }
 
-        factoryData.blocks.push(newBlock)
-        generateFactoryBlock(newBlock, factoryData, factoryBlockTemplate, factoryBodyDiv, factoryInputsOutputs)
+        factoryData.blocks.push(factoryBlockData)
+        generateFactoryBlock(allFactoriesData, factoryData, factoryBlockData, factoryBlockTemplate, factoryBodyDiv, factoryInputsOutputs)
     }
 }
 
 ///////////
 
-function generateFactoryBlock(blockData, factoryData, factoryBlockTemplate, factoryBodyDiv, factoryInputsOutputs) {
+function generateFactoryBlock(allFactoriesData, factoryData, factoryBlockData, factoryBlockTemplate, factoryBodyDiv, factoryInputsOutputs) {
     const factoryBlockDiv = factoryBlockTemplate.clone()
-        .css({ left: blockData.x, top: blockData.y })
-    factoryBlockDiv.draggable({ containment: factoryBodyDiv, stop: updateFactoryBlockLocation(blockData, factoryBlockDiv) })
+        .css({ left: factoryBlockData.x, top: factoryBlockData.y })
+    factoryBlockDiv.draggable({ containment: factoryBodyDiv, stop: updateFactoryBlockLocation(allFactoriesData, factoryBlockData, factoryBlockDiv) })
     factoryBodyDiv.append(factoryBlockDiv)
 
-    const amountInput = factoryBlockDiv.find('[data-factory-block-amount]').val(blockData.amount)
-    const recipeSelect = factoryBlockDiv.find('[data-factory-block-recipe-select]').val(blockData.recipe)
+    const amountInput = factoryBlockDiv.find('[data-factory-block-amount]').val(factoryBlockData.amount)
+    const recipeSelect = factoryBlockDiv.find('[data-factory-block-recipe-select]').val(factoryBlockData.recipe)
     
-    amountInput.change(updateFactoryBlockItems(blockData, factoryData, factoryBlockDiv, factoryInputsOutputs, recipeSelect, amountInput))
-    recipeSelect.change(updateFactoryBlockItems(blockData, factoryData, factoryBlockDiv, factoryInputsOutputs, recipeSelect, amountInput)).change()
+    amountInput.change(updateFactoryBlockItems(allFactoriesData, factoryBlockData, factoryData, factoryBlockDiv, factoryInputsOutputs, recipeSelect, amountInput))
+    recipeSelect.change(updateFactoryBlockItems(allFactoriesData, factoryBlockData, factoryData, factoryBlockDiv, factoryInputsOutputs, recipeSelect, amountInput)).change()
 }
 
 ///////////
 
-function updateFactoryBlockItems(blockData, factoryData, factoryBlockDiv, factoryInputsOutputs, recipeSelect, amountInput) {
+function updateFactoryBlockItems(allFactoriesData, blockData, factoryData, factoryBlockDiv, factoryInputsOutputs, recipeSelect, amountInput) {
     return function() {
         blockData.recipe = recipeSelect.val()
         blockData.amount = amountInput.val()
@@ -98,7 +102,7 @@ function updateFactoryBlockItems(blockData, factoryData, factoryBlockDiv, factor
         const inputsBlock = factoryBlockDiv.find('[data-factory-block-items-inputs]')
         const ingredientRows = inputsBlock.find('div')
         const inputs = {}
-    
+
         for (let i in recipe.ingredients) {
             const ingredient = recipe.ingredients[i]
             let row = ingredientRows[i]
@@ -144,13 +148,13 @@ function updateFactoryBlockItems(blockData, factoryData, factoryBlockDiv, factor
         blockData.outputs = outputs
 
         updateInputOutputs(factoryData)
-        updateMainInputsOutputs(factoryData, factoryInputsOutputs)
+        updateMainInputsOutputs(allFactoriesData, factoryData, factoryInputsOutputs)
     }
 }
 
 ///////////
 
-function updateMainInputsOutputs(factoryData, factoryInputsOutputs) {
+function updateMainInputsOutputs(allFactoriesData, factoryData, factoryInputsOutputs) {
     
     const inputsBlock = factoryInputsOutputs.find('[data-factory-io-items-inputs]')
     const ingredientRows = inputsBlock.find('div')
@@ -191,14 +195,18 @@ function updateMainInputsOutputs(factoryData, factoryInputsOutputs) {
     for (; i < productRows.length; i++) {
         $(productRows[i]).remove()
     }
+
+    localStorage.setItem('allFactoriesData', JSON.stringify(allFactoriesData))
 }
 
 ///////////
 
-function updateFactoryBlockLocation(blockData, factoryBlockDiv) {
+function updateFactoryBlockLocation(allFactoriesData, blockData, factoryBlockDiv) {
     return function() {
         blockData.x = factoryBlockDiv.css('left')
         blockData.y = factoryBlockDiv.css('top')
+        
+        localStorage.setItem('allFactoriesData', JSON.stringify(allFactoriesData))
     }
 }
 

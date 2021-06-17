@@ -13,60 +13,26 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
         <style>
-            .factoryRow {
-                background: #e4e4e4;
-                height: 800px;
-            }
-            .factoryLeftContainer {
-                height: 100%;
-                width: 300px;
-                float: left;
-                background: #18165C;
-                color: white;
-            }
-            .factoryRightContainer {
-                height: 100%;
-                width: calc(100% - 300px);
-                float: left;
-            }
-            .factoryBlockContainer {
-                width: 300px;
-                height: 220px;
-                padding: 1px;
-                background: #7D7AE1;
-                color: white;
-                border-radius: 8px;
-                box-shadow: 5px 5px 8px 10px #888888;
-            }
-            .factoryBlockMachinesLabel {
-                margin-right: 10px;
-            }
-            .factoryBlockMachinesAmount {
-                width: 50px;
-            }
-            .factoryBlockRow {
-                margin: 10px 10px;
-            }
-            .factoryBlockItems span {
-                display: inline-block;
-                width: 220px;
-            }
-            .factoryBlockItems span + span {
-                width: 50px;
-            }
         </style>
     </head>
     <body>
-
-        <div>
-            <button id="create-train-line-button" class="btn">Train Track</button>
-            <button id="create-factory-button" class="btn">Add Factory</button>
-            <a href="#ex1" rel="modal:open" class="btn">Modal</a>
+        <div class="tabSwitchRow">
+            <button id="switchToMapTabButton" class="big">Map</button>
+            <button id="switchToFactoryTabButton" class="big">Factory</button>
         </div>
 
-        <div id="mapid"></div>
+        <div id="mapTab" class="mapTab">
+            <div>
+                <button id="create-train-line-button" class="btn">Train Track</button>
+                <button id="create-factory-button" class="btn">Add Factory</button>
+            </div>
+            <div>
+                <div class="mapInfoSidebar"></div>
+                <div id="mapid" class="mapContainer"></div>
+            </div>
+        </div>
 
-        <div id="factory" class="factoryRow">
+        <div id="factoryTab" class="factoryTab" style="display: none">
             <div id="factoryInputsOutputs" class="factoryLeftContainer">
                 <button id="newFactoryBlockButton" class="factoryIoNewButton">New Block</button>
                 <div class="factoryIoRow factoryBlockItems" data-factory-io-items-inputs="1">
@@ -95,9 +61,12 @@
             </div>
         </div>
 
-          <script src="itemData.js"></script>
-          <script src="mapData.js"></script>
-          <script src="factory.js"></script>
-          <script src="script.js"></script>
+        <script>
+        </script>
+        <script src="itemData.js"></script>
+        <script src="mapData.js"></script>
+        <script src="tabs.js"></script>
+        <script src="factory.js"></script>
+        <script src="script.js"></script>
     </body>
 </html>

@@ -60,18 +60,12 @@ L.tileLayer('https://static.satisfactory-calculator.com/imgMap/gameLayer/Experim
     bounds
 }).addTo(map);
 
-const factoryData = [{
-    inputs: {},
-    outputs: {},
-    lat: -35.75, 
-    lng: 91.375,
-    blocks: [{
-        x: 300,
-        y: 100,
-        recipe: "Recipe_IngotSteel_C",
-        amount: 2
-    }]
-}]
+let allFactoriesData =JSON.parse(localStorage.getItem('allFactoriesData'))
+
+if (!allFactoriesData) {
+    allFactoriesData = []
+    localStorage.setItem('allFactoriesData', JSON.stringify(allFactoriesData))
+}
 
 ///////////
 
@@ -131,11 +125,10 @@ const constructorIcon = getMarkerIcon("purple", "cyan", "https://static.satisfac
 
 // add factories to map
 
-for (const factory of factoryData) {
-    L.marker([factory.lat, factory.lng], { icon: constructorIcon }).addTo(factoryLayerGroup).on('click', (e) => window.buildFactory(factory))
+for (const factoryData of allFactoriesData) {
+    L.marker([factoryData.lat, factoryData.lng], { icon: constructorIcon }).addTo(factoryLayerGroup).on('click', (e) => window.buildFactory(allFactoriesData, factoryData))
 }
 
-const factories = []
 let createFactoryEnabled = false
 
 createFactoryButton.click(() => {
@@ -144,12 +137,16 @@ createFactoryButton.click(() => {
 
 function createFactoryMapClick(e) {
     if (createFactoryEnabled) {
-        const factory = {
-            name: "New Factory"
+        const factoryData = {
+            inputs: {},
+            outputs: {},
+            lat: e.latlng.lat, 
+            lng: e.latlng.lng,
+            blocks: []
         }
-        factories.push(factory)
-        L.marker(e.latlng, { icon }).addTo(factoryLayerGroup).on('click', (e) => console.log(factory))
-        console.log(e.latlng)
+        allFactoriesData.push(factoryData)
+        localStorage.setItem('allFactoriesData', JSON.stringify(allFactoriesData))
+        L.marker(e.latlng, { icon: constructorIcon }).addTo(factoryLayerGroup).on('click', (e) => window.buildFactory(allFactoriesData, factoryData))
         createFactoryEnabled = false
     }
 }
