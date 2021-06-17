@@ -22,25 +22,20 @@
         </div>
 
         <div id="mapTab" class="mapTab">
-            <div>
+            <div class="mapInfoSidebar">
                 <button id="create-train-line-button" class="btn">Train Track</button>
                 <button id="create-factory-button" class="btn">Add Factory</button>
+                <div class="allFactoriesIoRow" data-all-factories-io-items-inputs="1"></div>
+                <div class="allFactoriesIoRow" data-all-factories-io-items-outputs="1"></div>
             </div>
-            <div>
-                <div class="mapInfoSidebar"></div>
-                <div id="mapid" class="mapContainer"></div>
-            </div>
+            <div id="mapid" class="mapContainer"></div>
         </div>
 
         <div id="factoryTab" class="factoryTab" style="display: none">
             <div id="factoryInputsOutputs" class="factoryLeftContainer">
                 <button id="newFactoryBlockButton" class="factoryIoNewButton">New Block</button>
-                <div class="factoryIoRow factoryBlockItems" data-factory-io-items-inputs="1">
-                    <label>Input</label>
-                </div>
-                <div class="factoryIoRow factoryBlockItems" data-factory-io-items-outputs="1">
-                    <label>Output</label>
-                </div>
+                <div class="factoryIoRow factoryBlockItems" data-factory-io-items-inputs="1"></div>
+                <div class="factoryIoRow factoryBlockItems" data-factory-io-items-outputs="1"></div>
             </div>
             <div id="factoryBody" class="factoryRightContainer">
                 <div class="factoryBlockContainer" data-factory-block-container="1">
@@ -51,12 +46,8 @@
                         <label class="factoryBlockMachinesLabel">Machines</label>
                         <input type="text" class="factoryBlockMachinesAmount" data-factory-block-amount />
                     </div>
-                    <div class="factoryBlockRow factoryBlockItems" data-factory-block-items-inputs="1">
-                        <label>Input</label>
-                    </div>
-                    <div class="factoryBlockRow factoryBlockItems" data-factory-block-items-outputs="1">
-                        <label>Output</label>
-                    </div>
+                    <div class="factoryBlockRow factoryBlockItems" data-factory-block-items-inputs="1"></div>
+                    <div class="factoryBlockRow factoryBlockItems" data-factory-block-items-outputs="1"></div>
                 </div>
             </div>
         </div>
@@ -67,6 +58,6 @@
         <script src="mapData.js"></script>
         <script src="tabs.js"></script>
         <script src="factory.js"></script>
-        <script src="script.js"></script>
+        <script src="map.js"></script>
     </body>
 </html>

@@ -19,7 +19,7 @@ function init() {
             generateFactoryBlock(allFactoriesData, factoryData, factoryBlockData, factoryBlockTemplate, factoryBodyDiv, factoryInputsOutputs)
         }
     
-        updateInputOutputs(factoryData)
+        updateInputOutputs(allFactoriesData, factoryData)
     
         newBlockButton.off('click').click(generateNewFactoryBlock(allFactoriesData, factoryData, factoryBlockTemplate, factoryBodyDiv, factoryInputsOutputs))
 
@@ -29,7 +29,7 @@ function init() {
 
 ///////////
 
-function updateInputOutputs(factoryData) {
+function updateInputOutputs(allFactoriesData, factoryData) {
     const itemAmounts = {}
     for (const blockData of factoryData.blocks) {
         for (const recipeCode in blockData.inputs) {
@@ -55,7 +55,7 @@ function updateInputOutputs(factoryData) {
     factoryData.inputs = calcInputs
     factoryData.outputs = calcOutputs
 
-    console.log(factoryData)
+    localStorage.setItem('allFactoriesData', JSON.stringify(allFactoriesData))
 }
 
 ///////////
@@ -147,7 +147,7 @@ function updateFactoryBlockItems(allFactoriesData, blockData, factoryData, facto
         
         blockData.outputs = outputs
 
-        updateInputOutputs(factoryData)
+        updateInputOutputs(allFactoriesData, factoryData)
         updateMainInputsOutputs(allFactoriesData, factoryData, factoryInputsOutputs)
     }
 }
@@ -222,7 +222,7 @@ function initFactoryBlock() {
     for (const recipeCode in window.itemData.recipes) {
         const recipe = window.itemData.recipes[recipeCode]
         if (recipe.inMachine) {
-            const option = $('<option>').attr('value', recipeCode).text(recipe.name)
+            const option = $('<option>').attr('value', recipeCode).text(recipe.name.replace('Alternate', 'Alt'))
             select.append(option)
         }
     }

@@ -4,6 +4,8 @@ html, body {
   margin: 0;
   padding: 0;
   background: #0f0919;
+  color: white;
+  font-family:'Roboto',sans-serif;
 }
 .tabSwitchRow {
   height: 50px;
@@ -14,8 +16,23 @@ html, body {
 .factoryTab {
   height: calc(100% - 50px);
 }
+.mapInfoSidebar {
+    height: 100%;
+    width: 270px;
+    float: left;
+    padding: 10px;
+}
+.allFactoriesIoRow span {
+  display: inline-block;
+  width: 220px;
+}
+.allFactoriesIoRow span + span {
+  width: 50px;
+}
 .mapContainer { 
-    height: 800px;
+    height: 100%;
+    width: calc(100% - 300px);
+    float: left;
 }
 button{
     display:inline-block;
@@ -26,7 +43,6 @@ button{
     border-radius:0.12em;
     box-sizing: border-box;
     text-decoration:none;
-    font-family:'Roboto',sans-serif;
     font-weight:300;
     color:#FFFFFF;
     text-align:center;
@@ -39,21 +55,23 @@ button:hover{
 button.big {
     font-size: 18px;
 }
-.factoryRow {
-  background: #e4e4e4;
-  height: 800px;
-}
 .factoryLeftContainer {
   height: 100%;
-  width: 300px;
+  width: 270px;
+  padding: 10px;
   float: left;
   background: #18165C;
-  color: white;
+}
+.allFactoriesIoRow {
+  margin: 20px 0;
 }
 .factoryRightContainer {
   height: 100%;
-  width: calc(100% - 300px);
+  width: calc(100% - 290px);
   float: left;
+}
+.factoryIoRow {
+  margin: 20px 0;
 }
 .factoryBlockContainer {
   width: 300px;
