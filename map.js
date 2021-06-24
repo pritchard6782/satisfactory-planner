@@ -13,14 +13,14 @@ const svgIconMarker = `
 const constructorIcon = getMarkerIcon("purple", "cyan", "https://static.satisfactory-calculator.com/img/gameUpdate4/ConstructorMk1_256.png?v=1615800933")
 
 const mapOptions = {
-    crs                             : L.CRS.Simple,
+    crs: L.CRS.Simple,
     minZoom,
     maxZoom,
-    zoomDelta                       : 0.25,
-    zoomSnap                        : 0.25,
-    attributionControl              : false,
-    preferCanvas                    : true,
-    fullscreenControl               : true
+    zoomDelta: 0.25,
+    zoomSnap: 0.25,
+    attributionControl: false,
+    preferCanvas: true,
+    fullscreenControl: true
 }
 
 let backgroundSize = 16384
@@ -30,19 +30,19 @@ let mappingBoundEast = 425301.832031;
 let mappingBoundNorth = -375000;
 let mappingBoundSouth = 375000;
 
-const westEastLength   = Math.abs(mappingBoundWest) + Math.abs(mappingBoundEast);
-const westEastRatio    = westEastLength / backgroundSize;
+const westEastLength = Math.abs(mappingBoundWest) + Math.abs(mappingBoundEast);
+const westEastRatio = westEastLength / backgroundSize;
 const northSouthLength = Math.abs(mappingBoundNorth) + Math.abs(mappingBoundSouth);
-const northSouthRatio  = northSouthLength / backgroundSize;
+const northSouthRatio = northSouthLength / backgroundSize;
 
-const westOffset       = westEastRatio * extraBackgroundSize;
-const northOffset      = northSouthRatio * extraBackgroundSize;
+const westOffset = westEastRatio * extraBackgroundSize;
+const northOffset = northSouthRatio * extraBackgroundSize;
 
-mappingBoundWest      -= westOffset;
-mappingBoundEast      += westOffset;
-mappingBoundNorth     -= northOffset;
-mappingBoundSouth     += northOffset;
-backgroundSize        += extraBackgroundSize * 2;
+mappingBoundWest -= westOffset;
+mappingBoundEast += westOffset;
+mappingBoundNorth -= northOffset;
+mappingBoundSouth += northOffset;
+backgroundSize += extraBackgroundSize * 2;
 
 const zoom = Math.ceil(Math.log(backgroundSize / tileSize) / Math.log(2))
 
@@ -86,14 +86,13 @@ for (const tab of window.mapData.options) {
         if (!['Desc_SAM_C', 'Desc_Geyser_C'].includes(resourceGroup.type)) {
 
             for (const resourceData of resourceGroup.options) {
-                
-                if (resourceData.purity !== undefined)
-                {
+
+                if (resourceData.purity !== undefined) {
                     const layerGroup = L.layerGroup().addTo(map)
                     mapControls[resourceData.layerId] = layerGroup
-    
+
                     for (const markerData of resourceData.markers) {
-    
+
                         const icon = getMarkerIcon(resourceData.outsideColor, resourceData.insideColor, resourceData.icon)
                         const marker = L.marker(unproject([markerData.x, markerData.y]), { icon }).addTo(layerGroup)
                         marker.on('click', resourceMarkerClick(marker, markerData, resourceGroup))
@@ -108,23 +107,23 @@ for (const tab of window.mapData.options) {
 }
 
 const LIQUIDS = [
-    'Desc_Water_C', 'Desc_LiquidOil_C', 'Desc_NitrogenGas_C'
+    'Desc_Water_C', 'Desc_LiquidOilWell_C', 'Desc_NitrogenGas_C'
 ]
 const liquidPurityMap = {
-    impure: 150, normal: 300, pure: 600
+    impure: 375, normal: 600, pure: 600
 }
 const solidPurityMap = {
-    impure: 300, normal: 600, pure: 720
+    impure: 900, normal: 1800, pure: 3600
 }
 
 function resourceMarkerClick(marker, markerData, resourceGroup) {
-    return function() {
+    return function () {
         if (usedResources[markerData.pathName]) {
             delete usedResources[markerData.pathName]
             marker.setOpacity(1)
         }
         else {
-            const yield = LIQUIDS.includes(markerData.pathName) ? liquidPurityMap[markerData.purity] : solidPurityMap[markerData.purity]
+            const yield = LIQUIDS.includes(resourceGroup.type) ? liquidPurityMap[markerData.purity] : solidPurityMap[markerData.purity]
             usedResources[markerData.pathName] = { yield, resource: resourceGroup.type }
             marker.setOpacity(0.6)
         }
@@ -146,7 +145,7 @@ let createTrainTrackEnabled = false
 createTrainLineButton.click(() => {
     if (!createTrainTrackEnabled) {
         trainLine = []
-        trainLineLayer = L.polyline(trainLine, {color: 'red'}).addTo(trainTrackLayerGroup)
+        trainLineLayer = L.polyline(trainLine, { color: 'red' }).addTo(trainTrackLayerGroup)
     }
     createTrainTrackEnabled = !createTrainTrackEnabled
 })
@@ -182,7 +181,7 @@ function createFactoryMapClick(e) {
         const factoryData = {
             inputs: {},
             outputs: {},
-            lat: e.latlng.lat, 
+            lat: e.latlng.lat,
             lng: e.latlng.lng,
             blocks: []
         }
@@ -284,7 +283,7 @@ map.on('click', onMapClick);
 
 function createFactoryMarker(allFactoriesData, factoryData, factoryLayerGroup) {
     const marker = L.marker([factoryData.lat, factoryData.lng], { icon: constructorIcon, draggable: true }).addTo(factoryLayerGroup).on('click', (e) => window.buildFactory(allFactoriesData, factoryData))
-    marker.on('dragend', function() {
+    marker.on('dragend', function () {
         var position = marker.getLatLng();
         factoryData.lat = position.lat
         factoryData.lng = position.lng
@@ -302,30 +301,30 @@ function getMarkerIcon(outsideColor, insideColor, iconImage) {
         .replace(/{iconImage}/g, iconImage);
 
     return L.divIcon({
-        className   : "leaflet-data-marker",
-        html        : icon,
-        iconAnchor  : [24, 24],
-        iconSize    : [48, 48]
+        className: "leaflet-data-marker",
+        html: icon,
+        iconAnchor: [24, 24],
+        iconSize: [48, 48]
     })
 }
 
 ////////////
 
-function unproject(coordinates){
+function unproject(coordinates) {
     return map.unproject(convertToRasterCoordinates(coordinates), zoom);
 }
 
 ////////////
 
 function convertToRasterCoordinates(coordinates) {
-    let x               = parseFloat(coordinates[0]) || 0;
-    let y               = parseFloat(coordinates[1]) || 0;
+    let x = parseFloat(coordinates[0]) || 0;
+    let y = parseFloat(coordinates[1]) || 0;
 
-    let xMax            = Math.abs(mappingBoundWest) + Math.abs(mappingBoundEast);
-    let yMax            = Math.abs(mappingBoundNorth) + Math.abs(mappingBoundSouth);
+    let xMax = Math.abs(mappingBoundWest) + Math.abs(mappingBoundEast);
+    let yMax = Math.abs(mappingBoundNorth) + Math.abs(mappingBoundSouth);
 
-    let xRatio          = Math.abs(backgroundSize) / xMax;
-    let yRatio          = Math.abs(backgroundSize) / yMax;
+    let xRatio = Math.abs(backgroundSize) / xMax;
+    let yRatio = Math.abs(backgroundSize) / yMax;
 
     x = ((xMax - mappingBoundEast) + x) * xRatio;
     y = (((yMax - mappingBoundNorth) + y) * yRatio) - backgroundSize;

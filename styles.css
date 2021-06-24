@@ -34,26 +34,38 @@ html, body {
     width: calc(100% - 300px);
     float: left;
 }
-button{
-    display:inline-block;
-    padding:0.35em 1.2em;
-    margin: 5px;
-    background: transparent;
-    border:0.1em solid #FFFFFF;
-    border-radius:0.12em;
-    box-sizing: border-box;
-    text-decoration:none;
-    font-weight:300;
-    color:#FFFFFF;
-    text-align:center;
-    transition: all 0.2s;
-    }
+select {
+  font-size: 12px;
+}
+input {
+  width: 60px;
+  font-size: 10px;
+}
+button {
+  display:inline-block;
+  padding:0.35em 1.2em;
+  margin: 5px;
+  background: transparent;
+  border:0.1em solid #FFFFFF;
+  border-radius:0.12em;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-weight:300;
+  color:#FFFFFF;
+  text-align:center;
+  transition: all 0.2s;
+}
 button:hover{
-    color:#000000;
-    background-color:#FFFFFF;
+  color:#000000;
+  background-color:#FFFFFF;
 }
 button.big {
-    font-size: 18px;
+  font-size: 18px;
+}
+.factoryDeleteBlockBtn {
+  padding: 0 4px;
+  float: right;
+  margin: 2px 5px;
 }
 .factoryLeftContainer {
   height: 100%;
@@ -74,12 +86,14 @@ button.big {
   margin: 20px 0;
 }
 .factoryBlockContainer {
-  width: 300px;
-  height: 220px;
+  width: 265px;
+  height: 165px;
   padding: 1px;
   background: #7D7AE1;
+  font-size: 12px;
   color: white;
   border-radius: 8px;
+  margin-bottom: 15px;
 }
 .factoryBlockMachinesLabel {
   margin-right: 10px;
@@ -92,7 +106,7 @@ button.big {
 }
 .factoryBlockItems span {
   display: inline-block;
-  width: 220px;
+  width: 170px;
 }
 .factoryBlockItems span + span {
   width: 50px;
