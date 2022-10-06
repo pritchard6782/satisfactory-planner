@@ -68,7 +68,7 @@ button.big {
   margin: 2px 5px;
 }
 .factoryLeftContainer {
-  height: 100%;
+  height: calc(100% - 50px);
   width: 270px;
   padding: 10px;
   float: left;
@@ -81,19 +81,20 @@ button.big {
   height: 100%;
   width: calc(100% - 290px);
   float: left;
+  position: relative;
 }
 .factoryIoRow {
   margin: 20px 0;
 }
 .factoryBlockContainer {
   width: 265px;
-  height: 165px;
+  height: 168px;
   padding: 1px;
   background: #7D7AE1;
   font-size: 12px;
   color: white;
   border-radius: 8px;
-  margin-bottom: 15px;
+  position: absolute;
 }
 .factoryBlockMachinesLabel {
   margin-right: 10px;

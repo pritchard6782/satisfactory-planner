@@ -65,7 +65,7 @@ function generateNewFactoryBlock(allFactoriesData, factoryData, factoryBlockTemp
     return function () {
         const factoryBlockData = {
             x: 100,
-            y: 165 * (1 - factoryData.blocks.length),
+            y: 168 * (1 - factoryData.blocks.length),
             recipe: "Recipe_AILimiter_C",
             amount: 0
         }
@@ -79,11 +79,11 @@ function generateNewFactoryBlock(allFactoriesData, factoryData, factoryBlockTemp
 
 function generateFactoryBlock(allFactoriesData, factoryData, factoryBlockData, factoryBlockTemplate, factoryBodyDiv, factoryInputsOutputs) {
     const factoryBlockDiv = factoryBlockTemplate.clone()
-        .css({ left: factoryBlockData.x, top: factoryBlockData.y })
+        .css({ left: Math.round(parseInt(factoryBlockData.x) / 12) * 12, top: Math.round(parseInt(factoryBlockData.y) / 10) *10 })
     factoryBlockDiv.draggable({
         containment: factoryBodyDiv,
         stop: updateFactoryBlockLocation(allFactoriesData, factoryBlockData, factoryBlockDiv),
-        grid: [10, 10]
+        grid: [12, 10]
     })
     factoryBodyDiv.append(factoryBlockDiv)
 

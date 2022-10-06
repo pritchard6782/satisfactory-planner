@@ -110,10 +110,10 @@ const LIQUIDS = [
     'Desc_Water_C', 'Desc_LiquidOilWell_C', 'Desc_NitrogenGas_C'
 ]
 const liquidPurityMap = {
-    impure: 375, normal: 600, pure: 600
+    impure: 150, normal: 300, pure: 600
 }
 const solidPurityMap = {
-    impure: 900, normal: 1800, pure: 3600
+    impure: 300, normal: 600, pure: 780
 }
 
 function resourceMarkerClick(marker, markerData, resourceGroup) {
@@ -128,7 +128,7 @@ function resourceMarkerClick(marker, markerData, resourceGroup) {
             marker.setOpacity(0.6)
         }
         localStorage.setItem('usedResources', JSON.stringify(usedResources))
-        updateMapSidebar()
+        window.updateMapSidebar()
     }
 }
 
@@ -194,7 +194,7 @@ function createFactoryMapClick(e) {
 
 // Sidebar
 
-function updateMapSidebar() {
+window.updateMapSidebar = () => {
 
     // Calc input / output
 
@@ -268,7 +268,7 @@ function updateMapSidebar() {
     }
 }
 
-updateMapSidebar()
+window.updateMapSidebar()
 
 ////////////
 

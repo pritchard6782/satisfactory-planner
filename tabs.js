@@ -6,6 +6,7 @@ const factoryTab = $('#factoryTab')
 window.switchToMapTab = () => {
     mapTab.show()
     factoryTab.hide()
+    window.updateMapSidebar()
 }
 window.switchToFactoryTab = () => {
     mapTab.hide()
